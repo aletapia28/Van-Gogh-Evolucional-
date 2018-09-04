@@ -31,6 +31,8 @@ public class GeneticAlgorithm {
     public static int RADIUSLIMIT=175;
     public static double PMUTATIONCOLOR = .2; 
     public static ImageWindow ventana = new ImageWindow();
+    public static ImageIcon images[] = new ImageIcon[POPSIZE+1];
+    public static int contImages = 0;
     
     private static int[][] convertTo2D(BufferedImage image){
         final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
@@ -82,6 +84,9 @@ public class GeneticAlgorithm {
 	try {
            ImageIcon img = new ImageIcon(image);
            ventana.jLabel1.setIcon(img);
+           images[contImages] =img;
+           contImages++;
+           System.out.println(contImages);
            // ImageIO.write(image, "jpg", ImageFile);
 	}
 	catch(Exception e) {
