@@ -31,7 +31,7 @@ public class GeneticAlgorithm {
     public static int RADIUSLIMIT=175;
     public static double PMUTATIONCOLOR = .2; 
     public static ImageWindow ventana = new ImageWindow();
-    public static ImageIcon images[] = new ImageIcon[POPSIZE+1];
+    public static ImageIcon images[] = new ImageIcon[MAXGENS+1];
     public static int contImages = 0;
     
     private static int[][] convertTo2D(BufferedImage image){
@@ -87,7 +87,7 @@ public class GeneticAlgorithm {
            images[contImages] =img;
            contImages++;
            System.out.println(contImages);
-           // ImageIO.write(image, "jpg", ImageFile);
+           ImageIO.write(image, "jpg", ImageFile);
 	}
 	catch(Exception e) {
             e.printStackTrace();
@@ -221,14 +221,6 @@ public class GeneticAlgorithm {
  			b.circles[i] = new Circle(tmp) ;
  		}
  		
- 		// int j=k;																			//two point crossover
- 		// while(j==k) {j = randomGenerator.nextInt(a.circles.length);}
- 		// for(int i = 0 ; i < j ; i++) {
- 		// 	Circle tmp = new Circle(a.circles[i]);
- 		// 	a.circles[i] = new Circle(b.circles[i]) ;
- 		// 	b.circles[i] = new Circle(tmp) ;
- 		// }
- 		
  		population[one] = new Genotype(a) ;
  		population[two] = new Genotype(b) ;
  	}
@@ -272,12 +264,18 @@ public class GeneticAlgorithm {
             Calendar calendario6 = new GregorianCalendar();
             System.out.println("Fin: "+calendario6.get(Calendar.HOUR_OF_DAY) + ":" + calendario6.get(Calendar.MINUTE) + ":" + calendario6.get(Calendar.SECOND));
             System.out.println(generation + "\t" + population[POPSIZE].fitness);
+            String gen = Integer.toString(generation);
+            String adap = Double.toString(population[POPSIZE].fitness);
+            ventana.jLabel4.setText(gen);
+            ventana.jLabel6.setText(adap);
         }
     }    
     
     public static void main(String[] args) throws IOException {
-  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("images.jpg"));	//read the image into the image object		
+  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("images1.jpg"));	//read the image into the image object		
+        ImageIcon im = new ImageIcon(image);
         ventana.setVisible(true);
+        ventana.jLabel2.setIcon(im);
         result = convertTo2D(image);
 	row = result.length;
 	col = result[0].length;
