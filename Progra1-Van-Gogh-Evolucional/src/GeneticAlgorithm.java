@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -29,7 +30,7 @@ public class GeneticAlgorithm {
     public static int[][] result;
     public static int RADIUSLIMIT=175;
     public static double PMUTATIONCOLOR = .2; 
-  //  public static Window ventana = new Window();
+    public static ImageWindow ventana = new ImageWindow();
     
     private static int[][] convertTo2D(BufferedImage image){
         final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
@@ -76,16 +77,14 @@ public class GeneticAlgorithm {
 	for(int i = 0; i < color.length; i++)
             for(int j = 0; j < color[0].length; j++)
 		image.setRGB(j, i, color[i][j]);
+      //  ventana.setSize(color[0].length, color.length);
         File ImageFile = new File(path);
-       // ventana.bf=image;
-      //  Graphics g = image.getGraphics();
-      // ventana.getContentPane().paint(g);
-        
 	try {
-           
-            ImageIO.write(image, "jpg", ImageFile);
+           ImageIcon img = new ImageIcon(image);
+           ventana.jLabel1.setIcon(img);
+           // ImageIO.write(image, "jpg", ImageFile);
 	}
-	catch(IOException e) {
+	catch(Exception e) {
             e.printStackTrace();
 	}
     }
@@ -182,15 +181,12 @@ public class GeneticAlgorithm {
 	for(i = 0; i < POPSIZE; i++){
             Random randomGenerator = new Random();
             p = (randomGenerator.nextInt(1000)) / 1000.0;
-            //System.out.println("p = " + p);
             if(p < population[0].cfitness) {
-	//			System.out.println(i + " Picking : " + 0);
 		newpopulation[i] = new Genotype(population[0]);}
             else
             {
                 for(j = 0; j < POPSIZE; j++) {
                     if(p >= population[j].cfitness && p < population[j+1].cfitness) {
-	//			System.out.println(i + " Picking : " + (j + 1));
 			newpopulation[i] = new Genotype(population[j+1]);
 			break ;
                     }
@@ -275,27 +271,8 @@ public class GeneticAlgorithm {
     }    
     
     public static void main(String[] args) throws IOException {
-        // TODO code application logic here
-      //  PrintWriter writer = new PrintWriter("info.txt", "UTF-8");
-//	writer.println("The first line");
-//	writer.println("POPSIZE=" + Integer.toString(POPSIZE));
-//	writer.println("MAXGENS=" + Integer.toString(MAXGENS));
-//	writer.println("circleCount=" + Integer.toString(circleCount));
-//	writer.println("RADIUSLIMIT=" + Integer.toString(RADIUSLIMIT));
-//	writer.println("PXOVER=" + Double.toString(PXOVER));
-//	writer.println("PMUTATION=" + Double.toString(PMUTATION));
-  //      writer.println("PMUTATIONCOLOR=" + Double.toString(PMUTATIONCOLOR));
-// 	writer.close();
-       /* JFrame ventana = new JFrame("Prueba de Imagen"); 
-        JPanel panel = (JPanel)ventana.getContentPane(); 
-        panel.setBounds(0,0,300,300); 
-        panel.setPreferredSize(new Dimension(300,300)); 
-        panel.setLayout(null);  
-        ventana.setBounds(0,0,300,300); 
-        ventana.setVisible(true);*/ 
   	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("images.jpg"));	//read the image into the image object		
-     //   JPanel panel =(JPanel)ventana.getContentPane();
-      //  ventana.setVisible(true);
+        ventana.setVisible(true);
         result = convertTo2D(image);
 	row = result.length;
 	col = result[0].length;
