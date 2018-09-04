@@ -87,7 +87,7 @@ public class GeneticAlgorithm {
            images[contImages] =img;
            contImages++;
            System.out.println(contImages);
-           ImageIO.write(image, "jpg", ImageFile);
+          // ImageIO.write(image, "jpg", ImageFile);
 	}
 	catch(Exception e) {
             e.printStackTrace();
