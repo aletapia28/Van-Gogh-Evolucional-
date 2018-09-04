@@ -268,6 +268,7 @@ public class GeneticAlgorithm {
             String adap = Double.toString(population[POPSIZE].fitness);
             ventana.jLabel4.setText(gen);
             ventana.jLabel6.setText(adap);
+            //noodfhdfio
         }
     }    
     
