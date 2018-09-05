@@ -93,8 +93,8 @@ public class Genotype {
                 
                 Color m= getColorofPoint(i,j);
                 Color n= new Color(result[i][j]);
-                double moda= Math.sqrt(m.getRed()*m.getRed()+ m.getBlue()*m.getBlue()+m.getGreen()*m.getGreen());
-                double modb= Math.sqrt(n.getRed()*n.getRed()+n.getBlue()*n.getBlue()+n.getGreen()*n.getGreen());
+               // double moda= Math.sqrt(m.getRed()*m.getRed()+ m.getBlue()*m.getBlue()+m.getGreen()*m.getGreen());
+               // double modb= Math.sqrt(n.getRed()*n.getRed()+n.getBlue()*n.getBlue()+n.getGreen()*n.getGreen());
                 ans += ((Math.pow(2,abs(m.getRed() - n.getRed())/255.0) + Math.pow(2,abs(m.getGreen() - n.getGreen())/255.0) + Math.pow(2,abs(m.getBlue() - n.getBlue())/255.0)) )/6.0;
             }
         }
