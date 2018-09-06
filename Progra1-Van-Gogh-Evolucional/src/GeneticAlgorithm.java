@@ -42,14 +42,19 @@ public class GeneticAlgorithm {
        final int height = 128;//image.getHeight();
 
         int[][] result = new int[height][width];
+        
         if (image.getAlphaRaster() != null) {
             final int pixelLength = 3;
-            for (int pixel = 0, row = 0, col = 0; pixel < pixels.length; pixel += pixelLength) {
+            for (int pixel = 0, row = 0, col = 0; (pixel < pixels.length)&(row<height); pixel += pixelLength) {
                 int argb = 0;
- 
+
+
+               // System.out.println(pixel+"-"+row+"-"+col);
+
 		argb += ((int) pixels[pixel + 1] & 0xff);			   // blue
 		argb += (((int) pixels[pixel + 2] & 0xff) << 8);		// green
 		argb += (((int) pixels[pixel + 3] & 0xff) << 16);	   // red
+               // System.out.println(row+"-"+col);
 		result[row][col] = argb;
 		col++;
 		if (col == width) {
