@@ -33,6 +33,7 @@ public class GeneticAlgorithm {
     public static ImageWindow ventana = new ImageWindow();
     public static ImageIcon images[] = new ImageIcon[MAXGENS+1];
     public static int contImages = 0;
+    public static double masApto=-1;
     
     private static int[][] convertTo2D(BufferedImage image){
         final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
@@ -89,7 +90,6 @@ public class GeneticAlgorithm {
            ventana.jLabel1.setIcon(img);
            images[contImages] =img;
            contImages++;
-           System.out.println(contImages);
           // ImageIO.write(image, "jpg", ImageFile);
 	}
 	catch(Exception e) {
@@ -114,10 +114,29 @@ public class GeneticAlgorithm {
             }
 	}
     }
+    public static int[][] crearArreglo(int num){
+        int answer[][] = new int[row][col];
+        for(int i = 0 ; i < row ; i++) {
+            for(int j = 0 ; j < col ; j++) {
+                Color c = population[num].getColorofPoint(i, j);
+                answer[i][j] = (c.getRed() << 16) | (c.getGreen() << 8) | c.getBlue();}
+        }
+        return answer;
+    }
+    public static void evaluarEuclideana(){
+        double resultado=0;
+        for(int member=0; member <POPSIZE; member++){
+            int[][] prueba = crearArreglo(member);
+            Euclidean eu = new Euclidean(result, prueba);
+           resultado= eu.calcularDistancia();
+           population[member].fitness=resultado;
+        }    
+    }
     public static void evaluate() {
         for(int member = 0; member < POPSIZE; member++)
             population[member].getFitness(result);
     }
+
     
     public static void initialize() {
         population = new Genotype[POPSIZE + 1];
@@ -127,6 +146,7 @@ public class GeneticAlgorithm {
             population[i] = new Genotype();
             newpopulation[i] = new Genotype();
             population[i].count = circleCount;
+           
             for(int j = 0 ; j < circleCount ; j++) {
                 population[i].circles[j].x = new Integer(randomGenerator.nextInt(row));
                 population[i].circles[j].y = new Integer(randomGenerator.nextInt(col));
@@ -150,7 +170,7 @@ public class GeneticAlgorithm {
         int i;
         cur_best = 0;
         for(mem = 1; mem < POPSIZE; mem++) {
-            if(population[mem].fitness > population[cur_best].fitness)
+            if(population[mem].fitness < population[cur_best].fitness)
 		cur_best = mem;
         }
             population[POPSIZE] = new Genotype(population[cur_best]);
@@ -242,7 +262,8 @@ public class GeneticAlgorithm {
             //mutate();
             Calendar calendario3 = new GregorianCalendar();
             System.out.println("Después mutación: "+calendario3.get(Calendar.HOUR_OF_DAY) + ":" + calendario3.get(Calendar.MINUTE) + ":" + calendario3.get(Calendar.SECOND));
-            evaluate();
+            evaluarEuclideana();
+            //evaluate();
             Calendar calendario4 = new GregorianCalendar();
             System.out.println("Después evluación: "+calendario4.get(Calendar.HOUR_OF_DAY) + ":" + calendario4.get(Calendar.MINUTE) + ":" + calendario4.get(Calendar.SECOND));
             Elitism eli = new Elitism(population, POPSIZE);
@@ -287,7 +308,8 @@ public class GeneticAlgorithm {
 	initialize();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
-	evaluate();
+        evaluarEuclideana();
+	//evaluate();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
 	keep_the_best();

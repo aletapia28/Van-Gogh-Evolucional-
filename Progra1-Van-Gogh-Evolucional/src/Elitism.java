@@ -16,11 +16,11 @@ public class Elitism {
        best = population[0].fitness;
        worst = population[0].fitness;
        for(i = 0; i < POPSIZE ; ++i) {
-           if(population[i].fitness > best) {
+           if(population[i].fitness < best) {
                best = population[i].fitness;
                best_mem = i ;
            }
-           if(population[i].fitness < worst) {
+           if(population[i].fitness > worst) {
                worst = population[i].fitness ;
                worst_mem = i ;
            }
@@ -31,7 +31,7 @@ public class Elitism {
 	//	worst individual from the current population with the
 	//	best one from the previous generation										
 	//
-	if(best >= population[POPSIZE].fitness)
+	if(best <= population[POPSIZE].fitness)
             population[POPSIZE] = new Genotype(population[best_mem]);
 	else{
             population[worst_mem] = new Genotype(population[POPSIZE]);
