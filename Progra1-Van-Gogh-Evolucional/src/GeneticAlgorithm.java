@@ -132,6 +132,15 @@ public class GeneticAlgorithm {
            population[member].fitness=resultado;
         }    
     }
+    public static void evaluarOurDistance(){
+        double resultado=0;
+        for (int member=0; member <POPSIZE; member++){
+            int[][] prueba = crearArreglo(member);
+            OurDistance our = new OurDistance(result,prueba);
+            resultado = our.CalcularDistancia();
+            population[member].fitness=resultado;
+        }
+    }
     public static void evaluate() {
         for(int member = 0; member < POPSIZE; member++)
             population[member].getFitness(result);

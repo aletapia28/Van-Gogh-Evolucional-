@@ -8,24 +8,31 @@
  *
  * @author maryp
  */
-public class Euclidean {
+public class OurDistance {
     int[][] ImagenMeta;
     int[][] ImagenPrueba;
     
-    public Euclidean(int[][] meta, int[][] prueba){
+    public OurDistance(int[][] meta, int[][] prueba){
         this.ImagenMeta=meta;
         this.ImagenPrueba=prueba;
     }
-
-    public double calcularDistancia(){
-        double suma=0;
+    public int abs(int diff){
+        if(diff<0){
+            return (-1*diff);
+        }
+        else{
+            return diff;
+        }
+    }
+    public double CalcularDistancia(){
+        double sum=0;
         double result=0;
         for(int i=0; i<ImagenMeta.length;i++){
             for(int j=0;j<ImagenMeta[0].length;j++){
-                suma+=Math.pow((ImagenMeta[i][j]-ImagenPrueba[i][j]), 2);
+                sum+=Math.pow(abs(ImagenMeta[i][j]-ImagenPrueba[i][j]), 3);
             }
         }
-        result= Math.sqrt(suma);
+        result = sum/2;
         return result;
     }
 }
