@@ -2,6 +2,7 @@ public class Elitism {
     public static Genotype population[];
     public static int POPSIZE;
     
+
     public Elitism(Genotype population[], int POPSIZE){
         this.population= population;
         this.POPSIZE=POPSIZE;

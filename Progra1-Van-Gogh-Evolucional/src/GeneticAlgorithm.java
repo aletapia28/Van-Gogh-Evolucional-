@@ -297,7 +297,7 @@ public class GeneticAlgorithm {
     }    
     
     public static void main(String[] args) throws IOException {
-  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("images1.jpg"));	//read the image into the image object		
+  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("imagen1.jpg"));	//read the image into the image object		
         ImageIcon im = new ImageIcon(image);
         ventana.setVisible(true);
         ventana.jLabel2.setIcon(im);

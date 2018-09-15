@@ -30,9 +30,14 @@ public class Euclidean {
         for(int i=0; i<ImagenMeta.length;i++){
             for(int j=0;j<ImagenMeta[0].length;j++){
                 suma+=Math.pow(abs(ImagenMeta[i][j]-ImagenPrueba[i][j]), 2);
+                
             }
+           
         }
         result= Math.sqrt(suma);
+        System.out.println("RESULTADO EUCLIDEAN "  + result);
         return result;
+
     }
+    
 }
