@@ -9,6 +9,7 @@ import static java.awt.image.ImageObserver.WIDTH;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.time.Clock.system;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
@@ -37,15 +38,20 @@ public class GeneticAlgorithm {
     
     private static int[][] convertTo2D(BufferedImage image){
         final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
-        final int width = image.getWidth();
-        final int height = image.getHeight();
+
+       final int width = 128;//image.getWidth();
+       final int height = 128;//image.getHeight();
+
         int[][] result = new int[height][width];
         
         if (image.getAlphaRaster() != null) {
             final int pixelLength = 3;
             for (int pixel = 0, row = 0, col = 0; (pixel < pixels.length)&(row<height); pixel += pixelLength) {
                 int argb = 0;
+
+
                // System.out.println(pixel+"-"+row+"-"+col);
+
 		argb += ((int) pixels[pixel + 1] & 0xff);			   // blue
 		argb += (((int) pixels[pixel + 2] & 0xff) << 8);		// green
 		argb += (((int) pixels[pixel + 3] & 0xff) << 16);	   // red
@@ -64,7 +70,7 @@ public class GeneticAlgorithm {
                 int argb = 0;
                 argb += ((int) pixels[pixel] & 0xff);				   // blue
                 argb += (((int) pixels[pixel + 1] & 0xff) << 8);		// green
-                argb += (((int) pixels[pixel + 2] & 0xff) << 16);	   // red
+               argb += (((int) pixels[pixel + 2] & 0xff) << 16);	   // red
                 result[row][col] = argb;
                 col++;
                 if (col == width) {
@@ -131,6 +137,15 @@ public class GeneticAlgorithm {
            resultado= eu.calcularDistancia();
            population[member].fitness=resultado;
         }    
+    }
+    public static void evaluarOurDistance(){
+        double resultado=0;
+        for (int member=0; member <POPSIZE; member++){
+            int[][] prueba = crearArreglo(member);
+            OurDistance our = new OurDistance(result,prueba);
+            resultado = our.CalcularDistancia();
+            population[member].fitness=resultado;
+        }
     }
     public static void evaluate() {
         for(int member = 0; member < POPSIZE; member++)
@@ -297,7 +312,11 @@ public class GeneticAlgorithm {
     }    
     
     public static void main(String[] args) throws IOException {
-  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("imagen1.jpg"));	//read the image into the image object		
+
+//  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("imagen1.jpg"));	//read the image into the image object		
+
+ 	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("imagen32.jpg"));	//read the image into the image object		
+
         ImageIcon im = new ImageIcon(image);
         ventana.setVisible(true);
         ventana.jLabel2.setIcon(im);
