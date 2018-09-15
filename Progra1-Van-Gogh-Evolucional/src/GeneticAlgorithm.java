@@ -338,6 +338,7 @@ public class GeneticAlgorithm {
 	double old_fitness = -1;
         generator(best, old_fitness);
         //xd
+        //prueba
     }
 }
 
