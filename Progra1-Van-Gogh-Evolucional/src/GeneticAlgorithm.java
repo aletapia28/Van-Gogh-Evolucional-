@@ -328,6 +328,7 @@ public class GeneticAlgorithm {
 	best = new Genotype(population[POPSIZE]);
 	best.print();
         evaluarEuclideana();
+        //evaluarOurDistance();
 	//evaluate();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
