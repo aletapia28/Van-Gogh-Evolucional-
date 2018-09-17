@@ -17,15 +17,16 @@ public class Euclidean {
         this.ImagenPrueba=prueba;
     }
 
-    public double calcularDistancia(){
-        double suma=0;
-        double result=0;
+    public float calcularDistancia(){
+        float suma=0 ;
+        float result=0;
         for(int i=0; i<ImagenMeta.length;i++){
             for(int j=0;j<ImagenMeta[0].length;j++){
                 suma+=Math.pow((ImagenMeta[i][j]-ImagenPrueba[i][j]), 2);
             }
         }
-        result= Math.sqrt(suma);
+        result= (float) Math.sqrt(suma);
+     //   result = (result*100)/ImagenMeta.length;
         return result;
     }
 }

@@ -8,15 +8,15 @@
  *
  * @author maryp
  */
-public class OurDistance {
-    int[][] ImagenMeta;
+public class ManhattanDistance {
+        int[][] ImagenMeta;
     int[][] ImagenPrueba;
     
-    public OurDistance(int[][] meta, int[][] prueba){
+    public ManhattanDistance(int[][] meta, int[][] prueba){
         this.ImagenMeta=meta;
         this.ImagenPrueba=prueba;
     }
-    public int abs(int diff){
+        public int abs(int diff){
         if(diff<0){
             return (-1*diff);
         }
@@ -29,11 +29,12 @@ public class OurDistance {
         float result=0;
         for(int i=0; i<ImagenMeta.length;i++){
             for(int j=0;j<ImagenMeta[0].length;j++){
-                sum+=Math.pow(abs(ImagenMeta[i][j]-ImagenPrueba[i][j]), 3);
+                System.out.println(ImagenMeta[i][j]+" "+ImagenPrueba[i][j]);
+                sum+=abs(ImagenMeta[i][j]-ImagenPrueba[i][j]);
             }
         }
-        result = sum/2;
       //  result= (result*100)/ImagenMeta.length;
         return result;
     }
+
 }

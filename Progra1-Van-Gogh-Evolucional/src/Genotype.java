@@ -5,8 +5,8 @@ public class Genotype {
     public Circle circles[] = new Circle[GeneticAlgorithm.circleCount]; //Lista de circulos que contiene cada miembro de la población
     public int count; //Almacena la cantidad de circulos en el miembro actual de la población
     public int bg_red,bg_blue,bg_green, bg_alpha; //Los valores RGBA del background
-    public double  cfitness, rfitness;
-    double fitness;
+    public float  cfitness, rfitness;
+    float fitness;
     
     public Genotype(){
         for(int i=0; i<circles.length;i++){
@@ -99,7 +99,7 @@ public class Genotype {
             }
         }
        // System.out.println("Largo result: "+countA+" largo result[0]: "+countB);
-       this.fitness= 100000.0/ans;
+       this.fitness= (float) (100000.0/ans);
        return this.fitness;
     }
     public void print(){
