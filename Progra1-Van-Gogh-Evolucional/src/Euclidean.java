@@ -26,6 +26,7 @@ public class Euclidean {
             }
         }
         result= Math.sqrt(suma);
+ 
         return result;
     }
 }
