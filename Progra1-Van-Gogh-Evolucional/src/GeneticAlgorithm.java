@@ -141,6 +141,18 @@ public class GeneticAlgorithm {
             population[member].fitness=resultado;
         }
     }
+    
+    
+    public static void evaluarAlternative(){
+                double resultado=0;
+        for (int member=0; member <POPSIZE; member++){
+            int[][] prueba = crearArreglo(member);
+            alternative our = new alternative(result,prueba);
+            resultado = our.calcularDistanciaAlternative();
+            population[member].fitness=resultado;
+        }
+        
+    }
     public static void evaluate() {
         for(int member = 0; member < POPSIZE; member++)
             population[member].getFitness(result);
@@ -241,7 +253,7 @@ public class GeneticAlgorithm {
 		// }
 		// System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
  	}
-    	public static void Xover(int one, int two) {
+    public static void Xover(int one, int two) {
  		Genotype a = new Genotype(population[one]);
  		Genotype b = new Genotype(population[two]);
 
@@ -306,7 +318,7 @@ public class GeneticAlgorithm {
     }    
     
     public static void main(String[] args) throws IOException {
-  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("images1.jpg"));	//read the image into the image object		
+  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("imagen12.jpg"));	//read the image into the image object		
         ImageIcon im = new ImageIcon(image);
         ventana.setVisible(true);
         ventana.jLabel2.setIcon(im);
@@ -317,8 +329,10 @@ public class GeneticAlgorithm {
 	initialize();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
-        evaluarEuclideana();
+       // evaluarEuclideana();
 	//evaluate();
+        evaluarOurDistance();
+        evaluarAlternative();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
 	keep_the_best();
