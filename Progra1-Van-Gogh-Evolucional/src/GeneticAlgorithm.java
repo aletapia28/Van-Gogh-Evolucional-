@@ -270,9 +270,9 @@ public class GeneticAlgorithm {
  		population[two] = new Genotype(b) ;
  	}
     public static void generator(Genotype best, float old_fitness){
-        
- //
-    	for(int generation = 0 ; x>1.50; generation++) {
+        float new_fitness = best.fitness;
+        int cantGen=0;
+    	for(int generation = 0 ; (cantGen<300); generation++) {
             x= (old_fitness*100)/result.length;
             System.out.println(x);
             //Calendar calendario = new GregorianCalendar();
@@ -300,17 +300,20 @@ public class GeneticAlgorithm {
             //Calendar calendario5 = new GregorianCalendar();
             //System.out.println("Después etilist: "+calendario5.get(Calendar.HOUR_OF_DAY) + ":" + calendario5.get(Calendar.MINUTE) + ":" + calendario5.get(Calendar.SECOND));
             best = new Genotype(population[POPSIZE]);
-            float new_fitness = best.fitness;
+            new_fitness = best.fitness;
             if(old_fitness!=new_fitness){
                 int answer[][] = new int[row][col];
                 for(int i = 0 ; i < row ; i++) {
                     for(int j = 0 ; j < col ; j++) {
                         Color c = population[POPSIZE].getColorofPoint(i, j);
                         answer[i][j] = (c.getRed() << 16) | (c.getGreen() << 8) | c.getBlue();
-											//answer[i][j] = (c.getRed() << 24) | (c.getGreen() << 16) | (c.getBlue() << 8) | c.getAlpha();
+			cantGen=0;								//answer[i][j] = (c.getRed() << 24) | (c.getGreen() << 16) | (c.getBlue() << 8) | c.getAlpha();
 			}
                 }
                 convertColorArrayToImage(answer, generation,POPSIZE,"images", "images");
+            }
+            else{
+                cantGen++;
             }
             old_fitness = new_fitness;
             //Calendar calendario6 = new GregorianCalendar();
@@ -344,7 +347,7 @@ public class GeneticAlgorithm {
                 cont++;
             }
         }
-        imagePopulation[9] = images[contImages-1];
+        imagePopulation[9] = images[contImages];
         imprimirImagenes(imagePopulation);
     }
     public static void imprimirImagenes(ImageIcon[] imageP){
@@ -363,7 +366,7 @@ public class GeneticAlgorithm {
     }
     
     public static void main(String[] args) throws IOException {
-  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("image.jpg"));	//read the image into the image object		
+  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("images1.jpg"));	//read the image into the image object		
         ImageIcon im = new ImageIcon(image);
         ventana.setVisible(true);
         ventana.jLabel2.setIcon(im);
