@@ -64,7 +64,7 @@ public class GeneticAlgorithm {
 	} 
 	else {
             final int pixelLength = 3;
-            for (int pixel = 0, row = 0, col = 0; pixel < pixels.length; pixel += pixelLength) {
+            for (int pixel = 0, row = 0, col = 0; (pixel < pixels.length)&(pixel+3<pixels.length); pixel += pixelLength) {
                 int argb = 0;
                 argb += ((int) pixels[pixel] & 0xff);				   // blue
                 argb += (((int) pixels[pixel + 1] & 0xff) << 8);		// green
@@ -272,7 +272,7 @@ public class GeneticAlgorithm {
     public static void generator(Genotype best, float old_fitness){
         
  //
-    	for(int generation = 0 ; x>1.71770176E8; generation++) {
+    	for(int generation = 0 ; x>1.50; generation++) {
             x= (old_fitness*100)/result.length;
             System.out.println(x);
             //Calendar calendario = new GregorianCalendar();
@@ -288,9 +288,9 @@ public class GeneticAlgorithm {
             //mutate();
             //Calendar calendario3 = new GregorianCalendar();
             //System.out.println("Después mutación: "+calendario3.get(Calendar.HOUR_OF_DAY) + ":" + calendario3.get(Calendar.MINUTE) + ":" + calendario3.get(Calendar.SECOND));
-            //evaluarOurDistance();
+            evaluarOurDistance();
             //evaluarManhattanDistance();
-            evaluarEuclideana();
+            //evaluarEuclideana();
             //evaluate();
             //Calendar calendario4 = new GregorianCalendar();
             //System.out.println("Después evluación: "+calendario4.get(Calendar.HOUR_OF_DAY) + ":" + calendario4.get(Calendar.MINUTE) + ":" + calendario4.get(Calendar.SECOND));
@@ -363,7 +363,7 @@ public class GeneticAlgorithm {
     }
     
     public static void main(String[] args) throws IOException {
-  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("images1.jpg"));	//read the image into the image object		
+  	BufferedImage image = ImageIO.read(GeneticAlgorithm.class.getResource("image.jpg"));	//read the image into the image object		
         ImageIcon im = new ImageIcon(image);
         ventana.setVisible(true);
         ventana.jLabel2.setIcon(im);
@@ -374,9 +374,9 @@ public class GeneticAlgorithm {
 	initialize();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
-       // evaluarOurDistance();
+        evaluarOurDistance();
         //evaluarManhattanDistance();
-        evaluarEuclideana();
+        //evaluarEuclideana();
 	//evaluate();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
