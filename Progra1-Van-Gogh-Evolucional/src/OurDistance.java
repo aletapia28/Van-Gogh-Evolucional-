@@ -33,6 +33,7 @@ public class OurDistance {
             }
         }
         result = sum/2;
+        System.out.println("NUESTRA DISTANCIA"+result);
         return result;
     }
 }
