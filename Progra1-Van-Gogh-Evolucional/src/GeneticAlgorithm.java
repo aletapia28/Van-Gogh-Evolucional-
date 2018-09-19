@@ -49,11 +49,9 @@ public class GeneticAlgorithm {
             final int pixelLength = 3;
             for (int pixel = 0, row = 0, col = 0; (pixel < pixels.length)&(row<height); pixel += pixelLength) {
                 int argb = 0;
-               // System.out.println(pixel+"-"+row+"-"+col);
 		argb += ((int) pixels[pixel + 1] & 0xff);			   // blue
 		argb += (((int) pixels[pixel + 2] & 0xff) << 8);		// green
 		argb += (((int) pixels[pixel + 3] & 0xff) << 16);	   // red
-               // System.out.println(row+"-"+col);
 		result[row][col] = argb;
 		col++;
 		if (col == width) {
@@ -87,14 +85,12 @@ public class GeneticAlgorithm {
 	for(int i = 0; i < color.length; i++)
             for(int j = 0; j < color[0].length; j++)
 		image.setRGB(j, i, color[i][j]);
-      //  ventana.setSize(color[0].length, color.length);
         File ImageFile = new File(path);
 	try {
            ImageIcon img = new ImageIcon(image);
            ventana.jLabel1.setIcon(img);
            images[contImages] =img;
            contImages++;
-          // ImageIO.write(image, "jpg", ImageFile);
 	}
 	catch(Exception e) {
             e.printStackTrace();
@@ -133,15 +129,12 @@ public class GeneticAlgorithm {
         float resultado=0;
         for(int member=0; member <POPSIZE; member++){
             int[][] prueba = crearArreglo(member);
-            ManhattanDistance man = new ManhattanDistance(result, prueba);
-           resultado= man.CalcularDistancia();
+            ManhattanDistance man = new ManhattanDistance(result, prueba, population[member]);
+           resultado= man.calcularDistancia();
            population[member].fitness=resultado;
         }    
     }
-    public static void evaluate() {
-        for(int member = 0; member < POPSIZE; member++)
-            population[member].getFitness(result);
-    }
+
 
     
     public static void initialize() {
@@ -207,11 +200,6 @@ public class GeneticAlgorithm {
 	//
 	//	Select survivors using cumulative fitness.
 	//
-	// System.out.println("cfitness values new");
-	// for(int z = 0 ; z < POPSIZE ; z++) {
-	// 	System.out.println(z + " : " + population[z].cfitness);
-	// }
-
 	for(i = 0; i < POPSIZE; i++){
             Random randomGenerator = new Random();
             p = (float) ((randomGenerator.nextInt(1000)) / 1000.0);
@@ -227,16 +215,6 @@ public class GeneticAlgorithm {
 		}
             }
         }
-	//
-	//	Once a new population is created, copy it back
-	//
-		// System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		// System.out.println("New pop");
-		// for(i = 0; i < POPSIZE; i++) {
-		// 	System.out.println(newpopulation[i].fitness);
-		// 	population[i] = new Genotype(newpopulation[i]);
-		// }
-		// System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
  	}
 
     public static void generator(Genotype best, float old_fitness){
@@ -245,35 +223,18 @@ public class GeneticAlgorithm {
         long adaptable = (int)Math.abs(old_fitness);
         
     	for(int generation = 0 ; (cantGen<1500) &&(generation<MAXGENS); generation++) {
-            System.out.println(adaptable);
+           // System.out.println(adaptable);
             x= (int)Math.abs((adaptable*100)/result.length);
-           // System.out.println(x);
-            //Calendar calendario = new GregorianCalendar();
-            //System.out.println("Inicio: "+calendario.get(Calendar.HOUR_OF_DAY) + ":" + calendario.get(Calendar.MINUTE) + ":" + calendario.get(Calendar.SECOND));
             selector();
-            //Calendar calendario1 = new GregorianCalendar();
-            //System.out.println("Después selector: "+calendario1.get(Calendar.HOUR_OF_DAY) + ":" + calendario1.get(Calendar.MINUTE) + ":" + calendario1.get(Calendar.SECOND));
-           // crossover();
-           Crossover cross = new Crossover(POPSIZE, PXOVER, population);
-           population= cross.crossover();
-            //Calendar calendario2 = new GregorianCalendar();
-            //System.out.println("Después crossover: "+calendario2.get(Calendar.HOUR_OF_DAY) + ":" + calendario2.get(Calendar.MINUTE) + ":" + calendario2.get(Calendar.SECOND));
+            Crossover cross = new Crossover(POPSIZE, PXOVER, population);
+            population= cross.crossover();
             Mutation mut= new Mutation(POPSIZE, circleCount, PMUTATION, PMUTATIONCOLOR, population, row, col, RADIUSLIMIT);
             population= mut.mutate();
-            //mutate();
-            //Calendar calendario3 = new GregorianCalendar();
-            //System.out.println("Después mutación: "+calendario3.get(Calendar.HOUR_OF_DAY) + ":" + calendario3.get(Calendar.MINUTE) + ":" + calendario3.get(Calendar.SECOND));
-            evaluarOurDistance();
+            //evaluarOurDistance();
             //evaluarManhattanDistance();
-            //evaluarEuclideana();
-            //evaluate();
-            //Calendar calendario4 = new GregorianCalendar();
-            //System.out.println("Después evluación: "+calendario4.get(Calendar.HOUR_OF_DAY) + ":" + calendario4.get(Calendar.MINUTE) + ":" + calendario4.get(Calendar.SECOND));
-            Elitism eli = new Elitism(population, POPSIZE);
+            evaluarEuclideana();
+             Elitism eli = new Elitism(population, POPSIZE);
             population = eli.elitist();
-            //elitist();
-            //Calendar calendario5 = new GregorianCalendar();
-            //System.out.println("Después etilist: "+calendario5.get(Calendar.HOUR_OF_DAY) + ":" + calendario5.get(Calendar.MINUTE) + ":" + calendario5.get(Calendar.SECOND));
             best = new Genotype(population[POPSIZE]);
             new_fitness = best.fitness;
             if(old_fitness!=new_fitness){
@@ -292,9 +253,6 @@ public class GeneticAlgorithm {
             }
             old_fitness = new_fitness;
              adaptable= (int)Math.abs(old_fitness);
-          
-            //Calendar calendario6 = new GregorianCalendar();
-            //System.out.println("Fin: "+calendario6.get(Calendar.HOUR_OF_DAY) + ":" + calendario6.get(Calendar.MINUTE) + ":" + calendario6.get(Calendar.SECOND));
             System.out.println(generation + "\t" + x);
             String gen = Integer.toString(generation);
             String ada = Integer.toString(x);
@@ -304,7 +262,6 @@ public class GeneticAlgorithm {
             if(generation==0){
                 x=274000000;
             }
-            //noodfhdfio
         }
     }    
     public static boolean esMultiplo(int n1, int n2){
@@ -359,10 +316,9 @@ public class GeneticAlgorithm {
 	initialize();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
-        evaluarOurDistance();
+        //evaluarOurDistance();
         //evaluarManhattanDistance();
-       // evaluarEuclideana();
-	//evaluate();
+        evaluarEuclideana();
 	best = new Genotype(population[POPSIZE]);
 	best.print();
 	keep_the_best();
@@ -371,7 +327,6 @@ public class GeneticAlgorithm {
 	float old_fitness = -1;
         generator(best, old_fitness);
         obtenerImagenes();
-        //xd
     }
 }
 
